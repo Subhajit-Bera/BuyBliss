@@ -4,8 +4,8 @@ app.use(express.json())
 
 
 //Import routes
-const router=require("./routes/productRoute");
-app.use("/api/v1",router);
+const product=require("./routes/productRoute");
+app.use("/api/v1",product);
 
 
 module.exports=app;
