@@ -20,6 +20,25 @@ exports.getAllProducts= async(req,res)=>{
 }
 
 
+//GET PRODUCT DETAILS
+exports.getProductDetails = async (req, res, next)=>{
+    const product = await Product.findById(req.params.id);
+
+    if (!product) {
+        return res.status(500).json({
+            success:false,
+            message:"Product not found"
+        })
+    }
+
+    res.status(200).json({
+        success: true,
+        product,
+    });
+
+
+}
+
 //UPDATE PRODUCT --Admin
 exports.updateProduct = async (req, res, next)=>{
     let product = await Product.findById(req.params.id); //using let because we are going to change the product
