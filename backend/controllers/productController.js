@@ -21,7 +21,7 @@ exports.getAllProducts= async(req,res)=>{
 
 
 //GET PRODUCT DETAILS
-exports.getProductDetails = async (req, res, next)=>{
+exports.getProductDetails =async(req, res, next)=>{
     const product = await Product.findById(req.params.id);
 
     if (!product) {
@@ -33,10 +33,8 @@ exports.getProductDetails = async (req, res, next)=>{
 
     res.status(200).json({
         success: true,
-        product,
+        product
     });
-
-
 }
 
 //UPDATE PRODUCT --Admin
