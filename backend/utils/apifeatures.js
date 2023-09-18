@@ -48,9 +48,13 @@ class ApiFeatures {
     }
 
     pagination(resultPerPage) {
+        //Convert the queryStr,page into Number and default value is 1
         const currentPage = Number(this.queryStr.page) || 1;
     
+        //If total 50 product -> result per page=10 
+        //Then in 1st page we show: product1...product10, 2nd page : product11....product20
         const skip = resultPerPage * (currentPage - 1);
+        //for 1st page: skip=10 *(1-1) -> skip =0; for 2nd page: skip=10*(2-1) ->skip=10 :it will skip first 10 products 
     
         this.query = this.query.limit(resultPerPage).skip(skip);
     
