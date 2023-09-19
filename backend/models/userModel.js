@@ -49,12 +49,12 @@ userSchema.pre("save", async function (next) {
         next();
     }
 
-    //Here is 10 is basically power means how much stronger the password should be. It can be greater than 10, but 10 is a recommended value
+    //Here 10 is basically power means how much stronger the password should be. It can be greater than 10, but 10 is a recommended value
     this.password = await bcrypt.hash(this.password, 10);
 });
 
 
-// JWT TOKEN (After registet instant sign-in)
+// JWT TOKEN (Function for Create token)
 userSchema.methods.getJWTToken = function () {
     return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRE,
