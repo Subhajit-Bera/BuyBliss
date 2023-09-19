@@ -1,9 +1,12 @@
 const nodeMailer = require("nodemailer");
 
+// SMPT Simple Mail Transfer Protocol
 const sendEmail = async (options) => {
   const transporter = nodeMailer.createTransport({
+    //Reason we need host and port here: https://www.npmjs.com/package/nodemailer
     host: process.env.SMPT_HOST,
     port: process.env.SMPT_PORT,
+
     service: process.env.SMPT_SERVICE,
     auth: {
       user: process.env.SMPT_MAIL,
