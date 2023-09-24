@@ -113,7 +113,7 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
 
 //RESET PASSWORD(After resetToken link send to user)
 exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
-   
+
     //Creating token hash for finding the user in database  
     const resetPasswordToken = crypto
         .createHash("sha256")
@@ -142,7 +142,7 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
         return next(new ErrorHandler("Password does not password", 400));
     }
 
-    //If everything is all right
+    //If everything is all right set the user password to the new given password
     user.password = req.body.password;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
@@ -153,3 +153,59 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
     //Login the user
     sendToken(user, 200, res);
 });
+
+//GET USER DETAILS
+exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
+    const user = await User.findById(req.user.id);
+
+    res.status(200).json({
+        success: true,
+        user,
+    });
+});
+
+// update User password
+exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
+    const user = await User.findById(req.user.id).select("+password");
+
+    const isPasswordMatched = await user.comparePassword(req.body.oldPassword);
+
+    //If old password is not matched
+    if (!isPasswordMatched) {
+        return next(new ErrorHandler("Old password is incorrect", 400));
+    }
+
+    //If new given password and confirm password is not matched
+    if (req.body.newPassword !== req.body.confirmPassword) {
+        return next(new ErrorHandler("password does not match", 400));
+    }
+
+    user.password = req.body.newPassword;
+
+    await user.save();
+
+    sendToken(user, 200, res);
+});
+
+
+
+exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
+    const newUserData = {
+        name: req.body.name,
+        email: req.body.email,
+    };
+
+    //We will update cloudinary later.
+
+
+    const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false,
+    });
+
+    res.status(200).json({
+        success: true,
+    });
+
+}) 
