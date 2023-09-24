@@ -154,6 +154,9 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
     sendToken(user, 200, res);
 });
 
+
+//Backend API Users
+
 //GET USER DETAILS
 exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
     const user = await User.findById(req.user.id);
@@ -164,7 +167,7 @@ exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
     });
 });
 
-// update User password
+//UPDATE USER PASSWORD
 exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
     const user = await User.findById(req.user.id).select("+password");
 
@@ -188,7 +191,7 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
 });
 
 
-
+//UPDATE USER PROFILE
 exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
     const newUserData = {
         name: req.body.name,
@@ -196,7 +199,6 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
     };
 
     //We will update cloudinary later.
-
 
     const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
         new: true,
@@ -208,4 +210,34 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
         success: true,
     });
 
-}) 
+});
+
+//Backend Api ADMIN
+
+//GET ALL USERS --Admin
+exports.getAllUser = catchAsyncErrors(async (req, res, next) => {
+    const users = await User.find();
+
+    res.status(200).json({
+        success: true,
+        users,
+    });
+});
+
+
+
+//GET INDIVIDUAL USER DETAILS --Admin
+exports.getSingleUser = catchAsyncErrors(async (req, res, next) => {
+    const user = await User.findById(req.params.id);
+  
+    if (!user) {
+      return next(
+        new ErrorHandler(`User does not exist with Id: ${req.params.id}`)
+      );
+    }
+  
+    res.status(200).json({
+      success: true,
+      user,
+    });
+  });
