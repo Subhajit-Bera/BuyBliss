@@ -9,11 +9,12 @@ exports.isAuthenticatedUser = catchAsyncErrors(async (req, res, next) => {
     //We were getting token as an object so we do {token} to get only token
     const { token } = req.cookies;
 
-    //If token not found
+    //If token not found means user is not login 
     if (!token) {
         return next(new ErrorHandler("Please Login to access this resource", 401));
     }
 
+    
     const decodedData = jwt.verify(token, process.env.JWT_SECRET);
 
     req.user = await User.findById(decodedData.id);

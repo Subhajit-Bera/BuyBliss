@@ -9,7 +9,7 @@
 //Create Token and saving in cookie
 const sendToken = (user, statusCode, res) => {
 
-    //Create token
+    //Create token -> getJWTToken() is a user schema method define in userModel
     const token = user.getJWTToken();
 
     
