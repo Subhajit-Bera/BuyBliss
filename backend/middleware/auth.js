@@ -23,6 +23,7 @@ exports.isAuthenticatedUser = catchAsyncErrors(async (req, res, next) => {
 });
 
 
+//Check the role(admin/user)
 exports.authorizeRoles = (...roles) => {
     return (req, res, next) => {
 
