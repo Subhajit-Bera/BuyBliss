@@ -1,7 +1,7 @@
 import React from "react";
 import { ReactNavbar } from "overlay-navbar";
-import logo from "./../../images/logo.png";
-import {CgShoppingBag,CgSearch,} from 'react-icons/cg';
+import logo from "../../../images/logo.png";
+// import {CgShoppingBag,CgSearch,} from 'react-icons/cg';
 
 const options = {
     burgerColorHover: "#eb4034",

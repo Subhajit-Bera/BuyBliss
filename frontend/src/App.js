@@ -1,8 +1,10 @@
 import React from "react";
 import './App.css';
-import Header from "./component/layout/Header.js";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch,Routes } from "react-router-dom";
 import WebFont from "webfontloader";
+import Header from "./component/layout/Header/Header.js";
+import Footer from "./component/layout/Footer/Footer";
+import Home from "./component/Home/Home";
 
 
 
@@ -17,6 +19,12 @@ function App() {
   })
   return <Router>
     <Header/>
+    <Routes>
+    <Route path="/" element={<Home/>}/>
+
+    </Routes>
+    <Footer/>
+    
   </Router>;
 }
 
