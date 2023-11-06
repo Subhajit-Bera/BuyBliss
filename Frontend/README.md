@@ -1,1 +1,1 @@
-# mern-ecommerce-course
+# Ecommerce Frontend
